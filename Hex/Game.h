@@ -23,6 +23,9 @@ private:
 	int boardHeight;
 	int boardWidth;
 	bool playersNumber;
+	int playerOneScore;
+	int playerTwoScore;
+
 
 	Board hexBoard;
 	Window window;
