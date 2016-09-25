@@ -1,8 +1,8 @@
 #pragma once
 #include "Board.h"
 #include "Player.h"
-#include <SFML\Graphics.hpp>
-#include "Wndow.h"
+#include <SFML/Graphics.hpp>
+#include "Window.h"
 #include <memory>
 #include <algorithm>
 
@@ -17,7 +17,16 @@ public:
 	void HandleInput();
 	void Update();
 	void Render();
+
+	sf::Time GetElapsed();
+	void RestartClock();
+
+	void MakeMove(EventDetails* l_details);
+	bool handlePlayerMove(sf::Color moveColor, sf::Color enemyColor);
+
 	Window* GetWindow();
+
+
 private:
 	int turn;
 	int boardHeight;

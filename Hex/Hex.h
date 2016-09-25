@@ -1,7 +1,4 @@
-#ifndef HEX
-
-
-
+#pragma once
 #define _USE_MATH_DEFINES
 
 #include <assert.h>
@@ -145,4 +142,3 @@ namespace hex
 		return hex_round(FractionalHex(q, r, -q - r));
 	}
 }
-#endif // !HEX

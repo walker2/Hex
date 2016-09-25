@@ -1,7 +1,10 @@
-
-#include <string>
-#include "SFML\Graphics.hpp"
 #pragma once
+#include <string>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+#include "EventManager.h"
+
 class Window
 {
 public:
@@ -16,23 +19,27 @@ public:
 
 	bool isDone();
 	bool isFullscreen();
+	bool isFocused();
+
+	void ToggleFullscreen(EventDetails* details);
+	void Close(EventDetails* details = nullptr);
+
 	sf::Vector2u GetWindowSize();
 	sf::RenderWindow* GetRenderWindow();
-
-	sf::Vector2i getMousePosition();
-	void ToggleFullscreen();
-
-	void Draw(sf::Drawable& drawable);
+	EventManager* GetEventManager();
+	
 
 private:
 	void Setup(const std::string& title, const sf::Vector2u& size);
-	void Destroy();
 	void Create();
 
 	sf::RenderWindow window;
+	EventManager eventManager;
 	sf::Vector2u windowSize;
 	std::string windowTitle;
+
 	bool m_isDone;
 	bool m_isFullscreen;
+	bool m_isFocused;
 };
 
