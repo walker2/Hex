@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 	{
 		game.Update();
 		game.Render();
-		game.HandleInput();
+		game.LateUpdate();
 	}
 	
 

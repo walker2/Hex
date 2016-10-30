@@ -41,6 +41,11 @@ void EventManager::setFocus(const bool & focus)
 	hasFocus = focus;
 }
 
+void EventManager::SetCurrentState(StateType state)
+{
+	currentState = state;
+}
+
 void EventManager::HandleEvent(sf::Event & event)
 {
 	// Handling all SFML events
@@ -145,12 +150,24 @@ void EventManager::Update()
 
 		}
 
-		if (bind->events.size() == bind->c)
-		{
-			auto callItr = callbacks.find(bind->name);
-			if (callItr != callbacks.end())
-			{
-				callItr->second(&bind->details);
+		if (bind->events.size() == bind->c) {
+			auto stateCallbacks = callbacks.find(currentState);
+			auto otherCallbacks = callbacks.find(StateType(0));
+
+			if (stateCallbacks != callbacks.end()) {
+				auto callItr = stateCallbacks->second.find(bind->name);
+				if (callItr != stateCallbacks->second.end()) {
+					// Pass in information about events.
+					callItr->second(&bind->details);
+				}
+			}
+
+			if (otherCallbacks != callbacks.end()) {
+				auto callItr = otherCallbacks->second.find(bind->name);
+				if (callItr != otherCallbacks->second.end()) {
+					// Pass in information about events.
+					callItr->second(&bind->details);
+				}
 			}
 		}
 		bind->c = 0;

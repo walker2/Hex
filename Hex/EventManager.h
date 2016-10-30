@@ -77,7 +77,11 @@ struct Binding // Struct for holding all event information including vector Even
 
 using Bindings = std::unordered_map<std::string, Binding*>; // Container for storing Bindings
 // Using unordered map ensures that there's only one Binding per action
-using Callbacks = std::unordered_map<std::string, std::function<void(EventDetails*)>>; // We define callback container which stores string key and C++11 function wrapper
+using CallbackContainer = std::unordered_map<std::string, std::function<void(EventDetails*)>>; // We define callback container which stores string key and C++11 function wrapper
+
+enum class StateType;
+
+using Callbacks = std::unordered_map<StateType, CallbackContainer>; 
 
 class EventManager
 {
@@ -89,18 +93,27 @@ public:
 	bool removeBinding(std::string name);
 
 	void setFocus(const bool& focus);
+	void SetCurrentState(StateType state);
 
-	template <class T>
-	bool addCallback(const std::string name, void (T::*func)(EventDetails*), T* instance)
+	template<class T>
+	bool AddCallback(StateType state, const std::string& name, void(T::*func)(EventDetails*), T* instance)
 	{
-		// Pointer to the method, instance of class and placeholder are bound and added into callback container
+		auto itr = callbacks.emplace(state, CallbackContainer()).first;
 		auto temp = std::bind(func, instance, std::placeholders::_1);
-		return callbacks.emplace(name, temp).second;
+		return itr->second.emplace(name, temp).second;
 	}
 
-	void removeCallback(const std::string name)
-	{
-		callbacks.erase(name);
+	bool RemoveCallback(StateType state, const std::string& name) {
+		auto itr = callbacks.find(state);
+		if (itr == callbacks.end()) 
+			return false; 
+
+		auto itr2 = itr->second.find(name);
+		if (itr2 == itr->second.end()) 
+			return false; 
+
+		itr->second.erase(name);
+		return true;
 	}
 
 	void HandleEvent(sf::Event& event);
@@ -113,8 +126,8 @@ public:
 private:
 	void loadBindings();
 
+	StateType currentState;
 	Bindings bindings;
 	Callbacks callbacks;
 	bool hasFocus;
 };
-

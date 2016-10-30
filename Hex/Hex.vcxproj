@@ -122,14 +122,24 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="State_Game.cpp" />
+    <ClCompile Include="State_Intro.cpp" />
+    <ClCompile Include="State_MainMenu.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseState.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Hex.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SharedContext.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="State_Game.h" />
+    <ClInclude Include="State_Intro.h" />
+    <ClInclude Include="State_MainMenu.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
