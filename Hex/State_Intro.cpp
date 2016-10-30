@@ -11,20 +11,21 @@ void State_Intro::OnCreate()
 {
 	timePassed = 0.0f;
 	sf::Vector2u windowSize = stateManager->GetContext()->wind->GetRenderWindow()->getSize();
-
-	introTexture.loadFromFile("intro.png");
+	
+	introTexture.loadFromFile("HEXX_LOGO.png");
 	introSprite.setTexture(introTexture);
 	introSprite.setOrigin(introTexture.getSize().x / 2.0f, introTexture.getSize().y / 2.0f);
 
 	introSprite.setPosition(windowSize.x / 2.0f, 0);
 
-	font.loadFromFile("arial.ttf");
+	font.loadFromFile("roboto_black.ttf");
+	text.setFillColor(sf::Color(236, 240, 241));
 	text.setFont(font);
 	text.setString({ " Press SPACE to continue " });
-	text.setCharacterSize(15);
+	text.setCharacterSize(20);
 	sf::FloatRect textRect = text.getLocalBounds();
 	text.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-	text.setPosition(windowSize.x / 2.0f, windowSize.y / 2.0f);
+	text.setPosition(windowSize.x / 2.0f, windowSize.y / 1.5f);
 
 	EventManager* eventManager = stateManager->GetContext()->eventManager;
 	eventManager->AddCallback(StateType::Intro, "Intro_Continue", &State_Intro::Continue, this);

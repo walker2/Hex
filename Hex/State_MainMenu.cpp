@@ -8,19 +8,20 @@ State_MainMenu::~State_MainMenu() {}
 
 void State_MainMenu::OnCreate()
 {
-	font.loadFromFile("arial.ttf");
+	font.loadFromFile("roboto_black.ttf");
+	text.setFillColor(sf::Color(231, 76, 60));
 	text.setFont(font);
-	text.setString(sf::String("MAIN MENU: "));
-	text.setCharacterSize(18);
+	text.setString(sf::String("MAIN MENU"));
+	text.setCharacterSize(64);
 
 	sf::FloatRect textRect = text.getLocalBounds();
 	text.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
 
 	text.setPosition(400, 100);
 
-	buttonSize = sf::Vector2f(300.0f, 32.0f);
+	buttonSize = sf::Vector2f(400.0f, 64.0f);
 	buttonPos = sf::Vector2f(400.0f, 200.0f);
-	buttonPadding = 4;
+	buttonPadding = 16;
 
 	std::string str[3];
 	str[0] = "PLAY";
@@ -32,15 +33,15 @@ void State_MainMenu::OnCreate()
 		sf::Vector2f buttonPosition(buttonPos.x, buttonPos.y +
 			(i * (buttonSize.y + buttonPadding)));
 		rects[i].setSize(buttonSize);
-		rects[i].setFillColor(sf::Color::White);
+		rects[i].setFillColor(sf::Color(236, 240, 241));
 
 		rects[i].setOrigin(buttonSize.x / 2.0f, buttonSize.y / 2.0f);
 		rects[i].setPosition(buttonPosition);
 
 		labels[i].setFont(font);
-		labels[i].setFillColor(sf::Color::Black);
+		labels[i].setFillColor(sf::Color(231, 76, 60));
 		labels[i].setString(sf::String(str[i]));
-		labels[i].setCharacterSize(12);
+		labels[i].setCharacterSize(32);
 
 		sf::FloatRect rect = labels[i].getLocalBounds();
 		labels[i].setOrigin(rect.left + rect.width / 2.0f,

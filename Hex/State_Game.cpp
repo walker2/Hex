@@ -3,9 +3,9 @@
 
 
 State_Game::State_Game(StateManager * stateManager)
-	: BaseState(stateManager), hexBoard(5),
+	: BaseState(stateManager), hexBoard(4),
 	layout(hex::LAYOUT_POINTY, sf::Vector2f(16, 16), sf::Vector2f(0, 0)),
-	player1(sf::Color::Blue, 1, "PLAYER"), player2(sf::Color::Red, 1, "AI")
+	player1(sf::Color(52, 152, 219), 1, "PLAYER"), player2(sf::Color(231, 76, 60), 1, "AI")
 {
 }
 
@@ -19,7 +19,7 @@ void State_Game::OnCreate()
 	hexes = hexBoard.getHexes();
 
 	hexBoard.setRectangleShape();
-	hexBoard.init(sf::Color::White, sf::Color::Black, layout);
+	hexBoard.init(sf::Color(236, 240, 241), sf::Color::Black, layout);
 	boardHeight = hexBoard.sideLength;
 	boardWidth = boardHeight;
 
@@ -28,24 +28,14 @@ void State_Game::OnCreate()
 	
 	if (hx1 != hexes->end())
 	{
-		hx1->second.second.setFillColor(sf::Color::Blue);
+		hx1->second.second.setFillColor(sf::Color(52, 152, 219));
 		player1.addToList(hx1);
 	}
 	if (hx2 != hexes->end())
 	{
-		hx2->second.second.setFillColor(sf::Color::Red);
+		hx2->second.second.setFillColor(sf::Color(231, 76, 60));
 		player2.addToList(hx2);
 	}
-
-	//hexes->begin()->second.second.setFillColor(sf::Color::Red);
-	//player1.addToList(hexes->begin());
-	//auto hx2 = hexes->find({ hex::Hex(5, 5, -10) });
-	//
-	//if (hx != hexes->end())
-	//{
-	//	hx->second.second.setFillColor(sf::Color::Blue);
-	//	player1.addToList(hx);
-	//}
 		
 	playerOneScore = playerTwoScore = 1;
 
@@ -135,10 +125,12 @@ void State_Game::MakeMove(EventDetails * details)
 			if (player1.getPoints() < player2.getPoints() + (boardHeight * boardWidth - (player2.getPoints() + player1.getPoints())))
 			{
 				std::cout << "GAME OVER " << player2.getName() << " WINS" << std::endl;
+				MainMenu(details);
 			}
 			else
 			{
 				std::cout << "GAME OVER " << player1.getName() << " WINS" << std::endl;
+				MainMenu(details);
 			}
 		}
 	}
@@ -152,13 +144,13 @@ bool State_Game::HandleMove(Player& player, Player& enemy)
 	auto hx = hexes->find(pixel_to_hex(layout, sf::Vector2f(localPosition.x, localPosition.y)));
 	if (hx != hexes->end())
 	{
-		if (hx->second.first.getFillColor() == sf::Color(0, 128, 0) && hx->second.second.getFillColor() == sf::Color::Transparent)
+		if (hx->second.first.getFillColor() == sf::Color(156, 155, 122) && hx->second.second.getFillColor() == sf::Color::Transparent)
 		{
 			hx->second.second.setFillColor(player.getColor());
 
 			for (auto itr2 = hexes->begin(); itr2 != hexes->end(); ++itr2)
 			{
-				itr2->second.first.setFillColor(sf::Color::White);
+				itr2->second.first.setFillColor(sf::Color(236, 240, 241));
 			}
 			player.addPoints(1);
 			player.addToList(hx);
@@ -181,7 +173,7 @@ bool State_Game::HandleMove(Player& player, Player& enemy)
 			
 			return true;
 		}
-		else if (hx->second.first.getFillColor() == sf::Color(255, 255, 0) && hx->second.second.getFillColor() == sf::Color::Transparent)
+		else if (hx->second.first.getFillColor() == sf::Color(255, 211, 147) && hx->second.second.getFillColor() == sf::Color::Transparent)
 		{
 			prevHex->second.second.setFillColor(sf::Color::Transparent);
 			player.removeFromList(prevHex);
@@ -190,7 +182,7 @@ bool State_Game::HandleMove(Player& player, Player& enemy)
 
 			for (auto itr2 = hexes->begin(); itr2 != hexes->end(); ++itr2)
 			{
-				itr2->second.first.setFillColor(sf::Color::White);
+				itr2->second.first.setFillColor(sf::Color(236, 240, 241));
 			}
 
 			std::vector<hex::Hex> hxs = hx->first.range(1);
@@ -212,7 +204,7 @@ bool State_Game::HandleMove(Player& player, Player& enemy)
 		}
 		for (auto itr2 = hexes->begin(); itr2 != hexes->end(); ++itr2)
 		{
-			itr2->second.first.setFillColor(sf::Color::White);
+			itr2->second.first.setFillColor(sf::Color(236, 240, 241));
 		}
 
 		if (hx->second.second.getFillColor() != player.getColor())
@@ -229,11 +221,11 @@ bool State_Game::HandleMove(Player& player, Player& enemy)
 				{
 					if (hex->first.distance(hx->first) <= 1)
 					{
-						hex->second.first.setFillColor(sf::Color(0, 128, 0));
+						hex->second.first.setFillColor(sf::Color(156, 155, 122));
 					}
 					else
 					{
-						hex->second.first.setFillColor(sf::Color(255, 255, 0));
+						hex->second.first.setFillColor(sf::Color(255, 211, 147));
 					}
 
 				}

@@ -11,7 +11,7 @@ Game::Game()
 
 	context.wind = &window;
 	context.eventManager = window.GetEventManager();
-	stateManager.SwitchTo(StateType::Game);
+	stateManager.SwitchTo(StateType::Intro);
 }
 
 
