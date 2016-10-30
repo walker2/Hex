@@ -57,7 +57,7 @@ namespace hex
 		Hex operator* (int k) const { return Hex(q * k, r * k, s * k); };
 
 		int length(Hex h) const { return int((abs(h.q) + abs(h.r) + abs(h.s)) / 2); };
-		int distance(Hex b) { return length(*this - b); };
+		int distance(const Hex b) const { return length(*this - b); };
 		
 		
 

@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Player.h"
 
+using Hexes = std::unordered_map<hex::Hex, std::pair<sf::ConvexShape, sf::CircleShape>>;
 class State_Game : public BaseState
 {
 public:
@@ -23,12 +24,14 @@ public:
 	void Pause(EventDetails* details);
 
 	void MakeMove(EventDetails* details);
-	bool HandleMove(sf::Color moveColor, sf::Color enemyColor);
+	bool HandleMove(Player& player, Player& enemy);
+	bool isGameOver(Player& player);
 private:
 	int turn;
 	int boardHeight;
 	int boardWidth;
-	bool playersNumber;
+	Player player1;
+	Player player2;
 	int playerOneScore;
 	int playerTwoScore;
 
@@ -39,6 +42,7 @@ private:
 	Board hexBoard;
 	hex::Layout layout;
 
-	std::unordered_map<hex::Hex, std::pair<sf::ConvexShape, sf::CircleShape>>* hexes;
+	Hexes* hexes;
+	std::_List_iterator<std::_List_val<std::_List_simple_types<std::pair<const hex::Hex, std::pair<sf::ConvexShape, sf::CircleShape>>>>> prevHex;
 };
 

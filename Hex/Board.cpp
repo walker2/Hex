@@ -15,6 +15,12 @@ void Board::setRectangleShape()
 		}
 	}
 }
+void Board::setCustomShape()
+{
+	hexes.insert({ hex::Hex(1, 1, -2),{ sf::ConvexShape(6), sf::CircleShape(8) } });
+	hexes.insert({ hex::Hex(1, 2, -3),{ sf::ConvexShape(6), sf::CircleShape(8) } });
+}
+
 
 void Board::init(sf::Color hexColor, sf::Color outlineColor, hex::Layout& layout)
 {

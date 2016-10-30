@@ -27,6 +27,7 @@ public:
 	const unsigned int sideLength;
 
 	void setRectangleShape();
+	void setCustomShape();
 	void init(sf::Color hexColor, sf::Color outlineColor,  hex::Layout& layout);
 	void Render(sf::RenderWindow& l_window);
 	void Update();
